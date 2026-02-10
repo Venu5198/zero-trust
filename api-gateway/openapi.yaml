@@ -1,0 +1,30 @@
+swagger: "2.0"
+info:
+  title: backend-api
+  version: 1.0.0
+
+schemes:
+  - https
+
+paths:
+  /:
+    get:
+      operationId: root
+      x-google-backend:
+        address: https://backend-api-850202233476.us-central1.run.app
+        protocol: h2
+      security:
+        - google_id_token: []
+      responses:
+        "200":
+          description: OK
+
+securityDefinitions:
+  google_id_token:
+    type: oauth2
+    flow: implicit
+    authorizationUrl: ""
+    x-google-issuer: "https://accounts.google.com"
+    x-google-jwks_uri: "https://www.googleapis.com/oauth2/v3/certs"
+    x-google-audiences: "https://backend-gateway-auksghvo.uc.gateway.dev"
+
