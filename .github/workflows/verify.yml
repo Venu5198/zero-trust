@@ -1,0 +1,29 @@
+name: Verify GCP OIDC Auth
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/850202233476/locations/global/workloadIdentityPools/github/providers/github
+          service_account: github-ci-sa@sudharshan-480715.iam.gserviceaccount.com
+
+      - name: Verify identity
+        run: |
+          gcloud auth list
+          gcloud config list
+
